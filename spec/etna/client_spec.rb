@@ -20,7 +20,7 @@ module Etna
       end
     end
 
-    context 'Collections reponse' do
+    context 'Collections response' do
       let(:api_response) { valid_collection_response }
 
       it 'converts the request into a collection response' do
@@ -29,7 +29,7 @@ module Etna
       end
     end
 
-    context 'Entity reponse' do
+    context 'Entity response' do
       let(:api_response) { valid_entity_response }
 
       it 'returns an entity on case of single response' do
