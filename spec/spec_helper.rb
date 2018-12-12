@@ -11,4 +11,11 @@ RSpec.configure do |config|
   config.expect_with :rspec do |c|
     c.syntax = :expect
   end
+
+  # Clear stubs and expectation before each test
+  config.before :each do
+    Typhoeus::Expectation.clear
+  end
 end
+
+Dir[File.dirname(__FILE__) + '/support/**/*.rb'].each { |f| require f }

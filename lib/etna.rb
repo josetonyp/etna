@@ -1,5 +1,7 @@
 require "etna/version"
+require "typhoeus"
+require 'json'
+require 'securerandom'
 
-module Etna
-  # Your code goes here...
-end
+Dir.glob('./lib/etna/concerns/*.rb') { |file| require file }
+Dir.glob('./lib/etna/**/*.rb') { |file| require file }
