@@ -1,8 +1,5 @@
 # Etna
 
-Welcome to your new gem! In this directory, you'll find the files you need to be able to package up your Ruby library into a gem. Put your Ruby code in the file `lib/etna`. To experiment with that code, run `bin/console` for an interactive prompt.
-
-TODO: Delete this and the text above, and describe your gem
 
 ## Installation
 
@@ -22,7 +19,75 @@ Or install it yourself as:
 
 ## Usage
 
-TODO: Write usage instructions here
+This is a general purpose Json API client library on top of Typhoeus. You can implement the 4 general verbs like:
+
+
+### GET
+
+```ruby
+client = Etna::Client.new('http://some_service')
+client.get("/users")
+
+```
+
+### POST
+
+```ruby
+client = Etna::Client.new('http://some_service')
+client.post("/users",  { name: 'Calisto', last_name: 'Mejidez' })
+
+```
+
+### PATCH
+
+```ruby
+client = Etna::Client.new('http://some_service')
+client.patch("/users/34",  { name: 'Calisto', last_name: 'Mejidez' })
+
+```
+
+### DELETE
+
+```ruby
+client = Etna::Client.new('http://some_service')
+client.delete("/users/34")
+
+```
+
+## Responses
+
+Responses can be of the kind:
+
+### Entity
+
+`Etna::Components::Responses::Entity`
+
+### Collection
+
+`Etna::Components::Responses::Collection`
+
+### Error
+
+`Etna::Components::Responses::ApiError`
+
+The Responses objects accepts response's attributes and delegates them to the internal Typhoeus object. Also they implement an unified interface with the following methods.
+
+```ruby
+  reponse.uid
+  reponse.success?
+  reponse.error?
+  reponse.code
+  reponse.to_h
+  reponse.body
+```
+
+And collections implement extra methods:
+
+```ruby
+  reponse.to_a
+  reponse[] # Iterator
+```
+
 
 ## Development
 
