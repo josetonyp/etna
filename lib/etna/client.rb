@@ -23,7 +23,7 @@ module Etna
     end
 
     def run(url, body = {}, options = {}, headers = {})
-      execute(__callee__, url, body = {}, options = {}, headers = {})
+      execute(__callee__, url, body, options, headers)
     end
 
     alias get run
