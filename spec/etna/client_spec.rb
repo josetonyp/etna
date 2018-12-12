@@ -33,7 +33,7 @@ module Etna
       let(:api_response) { valid_entity_response }
 
       it 'returns an entity on case of single response' do
-        response = client.get("/any_request")
+        response = client.get('/any_request')
         expect(response).to be_a(Components::Responses::Entity)
       end
     end
@@ -46,6 +46,21 @@ module Etna
 
         response = client.get('/any_request', timeout: 0.01)
         expect(response).to be_a(Components::Responses::ApiTimeoutError)
+      end
+    end
+
+    describe '.run' do
+      [
+        :get, :post, :patch, :delete
+      ].each do |method|
+        context "when called by #{method} alias" do
+          subject { client.send(method, 'url', 'body', 'options', 'header') }
+
+          it 'propagates body to execute' do
+            expect(client).to(receive(:execute).with(method, 'url', 'body', 'options', 'header'))
+            subject
+          end
+        end
       end
     end
   end
