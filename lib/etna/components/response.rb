@@ -64,7 +64,11 @@ module Etna
       end
 
       def parse_body!
-        response.body.empty? ? {} : JSON.parse(response.body)
+        if response.headers["Content-Type"].match(/json/)
+          response.body.empty? ? {} : JSON.parse(response.body)
+        else
+          response.body
+        end
       rescue ::JSON::ParserError => exception
         Responses::ApiJsonParseError.new(exception, self)
       end
