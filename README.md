@@ -88,6 +88,9 @@ And collections implement extra methods:
   reponse[] # Iterator
 ```
 
+## Testing
+
+If you would like to test how this library respond to API's you could use any api from list of [Public APIs](https://github.com/public-apis/public-apis) 
 
 ## Development
 
