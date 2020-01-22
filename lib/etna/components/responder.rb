@@ -6,16 +6,22 @@ module Etna
     class Responder
 
       def self.factor(typhoeus_response, request)
-        factor_error(typhoeus_response, request) || Etna::Components::Responses::Base.new(typhoeus_response, request)
+        factor_error(typhoeus_response, request) || factor_response(typhoeus_response, request)
       end
 
       private
+
+      def self.factor_response(typhoeus_response, request)
+        Etna::Components::Response.new(typhoeus_response, request)
+      rescue ::JSON::ParserError => exception
+        Errors::JsonParseError.new(typhoeus_response, request, exception, "There was an error parsing the given response")
+      end
 
       # rubocop:disable Metrics/CyclomaticComplexity
       def self.factor_error(typhoeus_response, request)
         case typhoeus_response.code
         when 0
-          Errors::ApiTimeout.new(typhoeus_response, request, "Request timed out in #{@response.total_time}")
+          Errors::ApiTimeout.new(typhoeus_response, request, "Request timed out in #{typhoeus_response.total_time}")
         when 300, 301, 302, 303, 307
           Errors::ApiRedirection.new(typhoeus_response, request)
         when 400
