@@ -17,7 +17,7 @@ module Etna
       request = before_request(request)
 
       result = request.execute
-      response = Components::Response.new(result, request).process
+      response = Components::Responder.factor(result, request)
 
       after_response(response)
 
